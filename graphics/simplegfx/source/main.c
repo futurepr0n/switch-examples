@@ -4,6 +4,7 @@
 
 #ifdef DISPLAY_IMAGE
 #include "image_bin.h"//Your own raw RGB888 1280x720 image at "data/image.bin" is required.
+#include "image2_bin.h" //second image
 #endif
 
 //See also libnx gfx.h.
@@ -14,6 +15,8 @@ int main(int argc, char **argv)
     u32  cnt=0;
     #ifdef DISPLAY_IMAGE
     u8*  imageptr = (u8*)image_bin;
+    u8*  imageptr2 = (u8*)image2_bin;
+
     #endif
 
     //Enable max-1080p support. Remove for 720p-only resolution.
@@ -49,6 +52,7 @@ int main(int argc, char **argv)
 
         //Each pixel is 4-bytes due to RGBA8888.
         u32 x, y;
+	
         for (y=0; y<height; y++)//Access the buffer linearly.
         {
             for (x=0; x<width; x++)
@@ -57,7 +61,24 @@ int main(int argc, char **argv)
                 #ifdef DISPLAY_IMAGE
                 framebuf[pos] = RGBA8_MAXALPHA(imageptr[pos*3+0]+(cnt*4), imageptr[pos*3+1], imageptr[pos*3+2]);
                 #else
-                //framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
+                framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
+                #endif
+            }
+        }
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gfxWaitForVsync();
+
+	for (y=0; y<height; y++)//Access the buffer linearly.
+        {
+            for (x=0; x<width; x++)
+            {
+                pos = y * width + x;
+                #ifdef DISPLAY_IMAGE
+                framebuf[pos] = RGBA8_MAXALPHA(imageptr2[pos*3+0]+(cnt*4), imageptr2[pos*3+1], imageptr2[pos*3+2]);
+                #else
+                framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
                 #endif
             }
         }
