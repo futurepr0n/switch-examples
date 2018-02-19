@@ -12,6 +12,7 @@
 int main(int argc, char **argv)
 {
     u32* framebuf;
+    u32* framebuf2;
     u32  cnt=0;
     #ifdef DISPLAY_IMAGE
     u8*  imageptr = (u8*)image_bin;
@@ -39,7 +40,9 @@ int main(int argc, char **argv)
 
         u32 width, height;
         u32 pos;
+	u32 pos2;
         framebuf = (u32*) gfxGetFramebuffer((u32*)&width, (u32*)&height);
+	framebuf2 = (u32*) gfxGetFramebuffer((u32*)&width, (u32*)&height);
 
         if(cnt==60)
         {
@@ -60,7 +63,7 @@ int main(int argc, char **argv)
                 pos = y * width + x;
                 #ifdef DISPLAY_IMAGE
                 framebuf[pos] = RGBA8_MAXALPHA(imageptr[pos*3+0]+(cnt*4), imageptr[pos*3+1], imageptr[pos*3+2]);
-		framebuf[pos] = RGBA8_MAXALPHA(imageptr2[pos*3+0]+(cnt*4), imageptr2[pos*3+1], imageptr2[pos*3+2]);
+		framebuf2[pos2] = RGBA8_MAXALPHA(imageptr2[pos2*3+0]+(cnt*4), imageptr2[pos2*3+1], imageptr2[pos2*3+2]);
                 #else
                 framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
                 #endif
