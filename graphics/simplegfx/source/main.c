@@ -32,8 +32,8 @@ int main(int argc, char **argv)
     u32* framebuf2;
     u32  cnt=0;
     #ifdef DISPLAY_IMAGE
-    u8*  imageptr = (u8*)image_bin;
-    u8*  imageptr2 = (u8*)image2_bin;
+    u8*  imageptr = (u8*)mario_bin;
+    u8*  imageptr2 = (u8*)sonic_bin;
 
     #endif
 
