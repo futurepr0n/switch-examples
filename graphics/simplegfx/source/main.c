@@ -61,6 +61,7 @@ int main(int argc, char **argv)
             for (x=0; x<width; x++)
             {
                 pos = y * width + x;
+		pos2 = y * width + x;
                 #ifdef DISPLAY_IMAGE
                 framebuf[pos] = RGBA8_MAXALPHA(imageptr[pos*3+0]+(cnt*4), imageptr[pos*3+1], imageptr[pos*3+2]);
 		framebuf2[pos2] = RGBA8_MAXALPHA(imageptr2[pos2*3+0]+(cnt*4), imageptr2[pos2*3+1], imageptr2[pos2*3+2]);
