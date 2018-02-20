@@ -5,9 +5,26 @@
 #ifdef DISPLAY_IMAGE
 #include "image_bin.h"//Your own raw RGB888 1280x720 image at "data/image.bin" is required.
 #include "image2_bin.h" //second image
+#include "sonic_bin.h"//Your own raw RGB888 1280x720 image at "data/image.bin" is required.
+#include "mario_bin.h" //second image
 #endif
 
+
+// Here we are going to define our structures for the objects
+typedef struct{
+	float x;
+	float y;
+	//int imgX;
+	//int imgY;
+	//vita2d_texture *img;
+	int isalive;
+	int pctr;
+}obj;
+
+
 //See also libnx gfx.h.
+
+
 
 int main(int argc, char **argv)
 {
@@ -62,29 +79,27 @@ int main(int argc, char **argv)
             for (x=0; x<width; x++)
             {
                 pos = y * width + x;
-		pos2 = y * width + x;
-                #ifdef DISPLAY_IMAGE
+		
                 framebuf[pos] = RGBA8_MAXALPHA(imageptr[pos*3+0]+(cnt*4), imageptr[pos*3+1], imageptr[pos*3+2]);
-                #else
-                framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
-                #endif
+                
+                
             }
         }
-	}else{
+	}else if (kDown & KEY_RIGHT){
 	for (y=0; y<height; y++)//Access the buffer linearly.
         {
             for (x=0; x<width; x++)
             {
-                pos = y * width + x;
-		pos2 = y * width + x;
-                #ifdef DISPLAY_IMAGE
-		framebuf2[pos2] = RGBA8_MAXALPHA(imageptr2[pos2*3+0]+(cnt*4), imageptr2[pos2*3+1], imageptr2[pos2*3+2]);
-                #else
-                framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
-                #endif
+            
+		    pos2 = y * width + x;
+               
+		        framebuf2[pos2] = RGBA8_MAXALPHA(imageptr2[pos2*3+0]+(cnt*4), imageptr2[pos2*3+1], imageptr2[pos2*3+2]);
+                
             }
         }
-	}
+	}else{
+        //do nothing
+    }
         gfxFlushBuffers();
         gfxSwapBuffers();
         gfxWaitForVsync();
