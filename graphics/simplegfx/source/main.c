@@ -64,6 +64,9 @@ int main(int argc, char **argv)
 		pos2 = y * width + x;
                 #ifdef DISPLAY_IMAGE
                 framebuf[pos] = RGBA8_MAXALPHA(imageptr[pos*3+0]+(cnt*4), imageptr[pos*3+1], imageptr[pos*3+2]);
+		gfxFlushBuffers();
+        	gfxSwapBuffers();
+        	gfxWaitForVsync();
 		framebuf2[pos2] = RGBA8_MAXALPHA(imageptr2[pos2*3+0]+(cnt*4), imageptr2[pos2*3+1], imageptr2[pos2*3+2]);
                 #else
                 framebuf[pos] = 0x01010101 * cnt * 4;//Set framebuf to different shades of grey.
