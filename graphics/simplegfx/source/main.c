@@ -56,6 +56,7 @@ int main(int argc, char **argv)
         //Each pixel is 4-bytes due to RGBA8888.
         u32 x, y;
 	
+	if (kDown & KEY_LEFT) {
         for (y=0; y<height; y++)//Access the buffer linearly.
         {
             for (x=0; x<width; x++)
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
                 #endif
             }
         }
-
+	}else{
 	for (y=0; y<height; y++)//Access the buffer linearly.
         {
             for (x=0; x<width; x++)
@@ -83,7 +84,7 @@ int main(int argc, char **argv)
                 #endif
             }
         }
-
+	}
         gfxFlushBuffers();
         gfxSwapBuffers();
         gfxWaitForVsync();
